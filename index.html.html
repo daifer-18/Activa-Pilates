@@ -1,187 +1,557 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <title>Activa Pilates Studio</title>
+  <title>Activa Pilates Studio | Movimiento Consciente</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Clases de pilates personalizadas y grupales en Haedo. Movimiento consciente, fuerza y bienestar integral.">
+
+  <!-- Google Fonts - Raleway -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
     :root {
-      --principal: #6b7f62;
-      --oscuro: #2f2f2f;
+      --primary-rose: #c89c9f;
+      --primary-dark: #64383b;
+      --light-bg: #faf7f7;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
-      color: var(--oscuro);
+      font-family: 'Raleway', sans-serif;
+      color: var(--primary-dark);
+      background-color: var(--white);
+      overflow-x: hidden;
     }
 
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* NAVBAR */
     .navbar {
-      background-color: white;
+      background-color: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      padding: 1rem 0;
+      box-shadow: 0 2px 20px rgba(100, 56, 59, 0.08);
+      transition: all 0.3s ease;
     }
 
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--primary-rose);
+      box-shadow: 0 4px 15px rgba(200, 156, 159, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(200, 156, 159, 0.4);
+    }
+
+    .brand-text {
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: var(--primary-dark);
+      letter-spacing: 0.5px;
+    }
+
+    /* HERO SECTION */
     .hero {
-      background: url("img/hero.jpg.jpg") no-repeat center center;
+      position: relative;
+      background: linear-gradient(135deg, rgba(100, 56, 59, 0.85), rgba(200, 156, 159, 0.75)),
+        url("img/hero.jpg.jpg") no-repeat center center;
       background-size: cover;
-      height: 90vh;
-      color: white;
-    }
-<section class="py-5 text-center">
-  <img src="img/hero.jpg.jpg" alt="Prueba imagen"
-       style="max-width:400px; border:3px solid red;">
-</section>
-    .btn-principal {
-      background-color: var(--principal);
-      color: white;
-      border: none;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      text-align: center;
+      padding: 2rem;
     }
 
-    .btn-principal:hover {
-      background-color: #5a6b52;
-      color: white;
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(100, 56, 59, 0.3) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+      letter-spacing: 1px;
+    }
+
+    .hero .lead {
+      font-size: 1.4rem;
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+      text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+      letter-spacing: 2px;
+    }
+
+    /* BUTTONS */
+    .btn-custom {
+      padding: 0.9rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
     .btn-whatsapp {
-      background-color: #25D366;
-      color: white;
+      background: linear-gradient(135deg, #25D366, #1ebe57);
+      color: var(--white);
+      border: none;
     }
 
+    .btn-whatsapp:hover {
+      background: linear-gradient(135deg, #1ebe57, #128C7E);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+      color: var(--white);
+    }
+
+    .btn-primary-custom {
+      background: linear-gradient(135deg, var(--primary-rose), #b88a8d);
+      color: var(--white);
+      border: none;
+    }
+
+    .btn-primary-custom:hover {
+      background: linear-gradient(135deg, #b88a8d, var(--primary-dark));
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(200, 156, 159, 0.4);
+      color: var(--white);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 5rem 0;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-rose), var(--primary-dark));
+      border-radius: 2px;
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: #666;
+      font-weight: 300;
+      margin-top: 1.5rem;
+      line-height: 1.8;
+    }
+
+    /* ABOUT SECTION */
+    .about-section {
+      background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
+    }
+
+    .location-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary-rose);
+      color: var(--white);
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-top: 1.5rem;
+      box-shadow: 0 4px 15px rgba(200, 156, 159, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .location-badge:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(200, 156, 159, 0.4);
+    }
+
+    /* CARDS */
+    .card-custom {
+      border: none;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      background: var(--white);
+      box-shadow: 0 5px 25px rgba(100, 56, 59, 0.1);
+      height: 100%;
+    }
+
+    .card-custom:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(100, 56, 59, 0.2);
+    }
+
+    .card-custom .card-body {
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .card-custom h5 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+    }
+
+    .card-custom p {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .card-highlight {
+      background: linear-gradient(135deg, var(--primary-rose), #b88a8d);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-highlight::before {
+      content: '⭐';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 2rem;
+      opacity: 0.3;
+    }
+
+    .card-highlight h5,
+    .card-highlight p {
+      color: var(--white);
+    }
+
+    /* PAYMENT SECTION */
+    .payment-section {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #4a2a2d 100%);
+      color: var(--white);
+    }
+
+    .payment-section .section-title {
+      color: var(--white);
+    }
+
+    .payment-section .section-title::after {
+      background: linear-gradient(90deg, var(--primary-rose), var(--white));
+    }
+
+    .payment-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 500px;
+      margin: 2rem auto 0;
+    }
+
+    .btn-payment {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: var(--white);
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .btn-payment:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: var(--primary-rose);
+      transform: translateX(5px);
+      color: var(--white);
+    }
+
+    /* MAP SECTION */
+    .map-section {
+      background: var(--light-bg);
+    }
+
+    .map-container {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(100, 56, 59, 0.15);
+      margin-top: 2rem;
+    }
+
+    /* FOOTER */
     footer {
-      background-color: var(--oscuro);
-      color: white;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #2d1a1c 100%);
+      color: var(--white);
+      padding: 3rem 0 1.5rem;
+    }
+
+    footer a {
+      color: var(--primary-rose);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    footer a:hover {
+      color: var(--white);
+      text-decoration: underline;
+    }
+
+    .footer-divider {
+      width: 60px;
+      height: 3px;
+      background: var(--primary-rose);
+      margin: 1.5rem auto;
+      border-radius: 2px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero .lead {
+        font-size: 1.1rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .logo-img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .brand-text {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* ANIMATIONS */
+    .fade-in {
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar fixed-top shadow-sm">
-  <div class="container">
-    <img src="img/logo.jpg.jpeg" alt="Activa Pilates Studio" height="45">
-  </div>
-</nav>
+  <!-- NAVBAR -->
+  <nav class="navbar fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="img/logo.jpg.jpeg" alt="Activa Pilates Studio Logo" class="logo-img">
+        <span class="brand-text">Activa Pilates Studio</span>
+      </a>
+    </div>
+  </nav>
 
-<!-- HERO -->
-<section class="hero d-flex align-items-center text-center">
-  <div class="container">
-    <h1 class="display-5 fw-bold">Activa Pilates Studio</h1>
-    <p class="lead mt-3">Movimiento consciente · Fuerza · Bienestar</p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Activa Pilates Studio</h1>
+      <p class="lead">Movimiento Consciente · Fuerza · Bienestar</p>
 
-    <a href="https://wa.me/5491173685374" target="_blank"
-       class="btn btn-whatsapp btn-lg mt-4">
-      Consultar por WhatsApp
-    </a>
-  </div>
-</section>
+      <a href="https://wa.me/5491173685374" target="_blank" class="btn-custom btn-whatsapp">
+        💬 Consultar por WhatsApp
+      </a>
+    </div>
+  </section>
 
-<!-- SOBRE -->
-<section class="py-5">
-  <div class="container text-center">
-    <h2 class="mb-4">Nuestro Estudio</h2>
-    <p class="text-muted">
-      Clases de pilates personalizadas y grupales, enfocadas en la postura,
-      la fuerza y el bienestar integral.
-    </p>
-    <p class="fw-semibold">📍 Fasola 728 – Haedo</p>
-  </div>
-</section>
+  <!-- ABOUT -->
+  <section class="about-section">
+    <div class="container text-center">
+      <h2 class="section-title">Nuestro Estudio</h2>
+      <p class="section-subtitle">
+        Clases de pilates personalizadas y grupales, enfocadas en la postura,<br>
+        la fuerza y el bienestar integral. Descubrí el equilibrio perfecto entre cuerpo y mente.
+      </p>
+      <div class="location-badge">
+        📍 Fasola 728 – Haedo
+      </div>
+    </div>
+  </section>
 
-<!-- PACKS -->
-<section class="py-5 bg-light">
-  <div class="container">
-    <h2 class="text-center mb-5">Packs de Clases</h2>
+  <!-- PACKS -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">Packs de Clases</h2>
 
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card h-100 text-center shadow-sm">
-          <div class="card-body">
-            <h5>Pack Inicial</h5>
-            <p>4 clases mensuales</p>
-            <a href="https://wa.me/5491173685374" target="_blank"
-               class="btn btn-principal">
-              Comprar
-            </a>
+      <div class="row g-4 mt-4">
+        <div class="col-md-4">
+          <div class="card-custom">
+            <div class="card-body">
+              <h5>Pack Inicial</h5>
+              <p>4 clases mensuales</p>
+              <a href="https://wa.me/5491173685374" target="_blank" class="btn-custom btn-primary-custom">
+                Comprar
+              </a>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-4">
-        <div class="card h-100 text-center shadow-sm">
-          <div class="card-body">
-            <h5>Pack Activo</h5>
-            <p>8 clases mensuales</p>
-            <a href="https://wa.me/5491173685374" target="_blank"
-               class="btn btn-principal">
-              Comprar
-            </a>
+        <div class="col-md-4">
+          <div class="card-custom card-highlight">
+            <div class="card-body">
+              <h5>Pack Activo</h5>
+              <p>8 clases mensuales</p>
+              <a href="https://wa.me/5491173685374" target="_blank" class="btn-custom btn-whatsapp">
+                Comprar
+              </a>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-4">
-        <div class="card h-100 text-center shadow-sm">
-          <div class="card-body">
-            <h5>Pack Full</h5>
-            <p>Clases ilimitadas</p>
-            <a href="https://wa.me/5491173685374" target="_blank"
-               class="btn btn-principal">
-              Comprar
-            </a>
+        <div class="col-md-4">
+          <div class="card-custom">
+            <div class="card-body">
+              <h5>Pack Full</h5>
+              <p>Clases ilimitadas</p>
+              <a href="https://wa.me/5491173685374" target="_blank" class="btn-custom btn-primary-custom">
+                Comprar
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- PAGOS -->
-<section class="py-5">
-  <div class="container text-center">
-    <h2 class="mb-4">Medios de Pago</h2>
+  <!-- PAYMENT -->
+  <section class="payment-section">
+    <div class="container text-center">
+      <h2 class="section-title">Medios de Pago</h2>
 
-    <a href="https://mpago.la/XXXXXX" target="_blank" class="btn btn-principal mb-3">
-      💳 Pagar con Mercado Pago
-    </a>
-    <a href="https://mpago.la/XXXXXX" target="_blank" class="btn btn-principal mb-3">
-      🏦 Transferencia bancaria
-    </a>
+      <div class="payment-buttons">
+        <a href="https://wa.me/5491173685374" target="_blank" class="btn-payment">
+          💳 Pagar con Mercado Pago
+        </a>
+        <a href="https://wa.me/5491173685374" target="_blank" class="btn-payment">
+          🏦 Transferencia Bancaria
+        </a>
+      </div>
 
-    <p class="text-muted">
-      Consultá por WhatsApp para recibir los datos de pago.
-    </p>
-  </div>
-</section>
-
-<!-- MAPA -->
-<section class="py-5 bg-light">
-  <div class="container text-center">
-    <h2 class="mb-4">Dónde estamos</h2>
-
-    <div class="ratio ratio-16x9">
-      <iframe
-        src="https://www.google.com/maps?q=Fasola%20728%20Haedo&output=embed"
-        style="border:0;"
-        allowfullscreen
-        loading="lazy">
-      </iframe>
+      <p class="mt-4" style="opacity: 0.9;">
+        Consultá por WhatsApp para recibir los datos de pago.
+      </p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
-<footer class="text-center py-4">
-  <p class="mb-1">© 2026 Activa Pilates Studio</p>
-  <p class="mb-1">Fasola 728 – Haedo</p>
-  <a href="https://instagram.com/activapilates.studio"
-     target="_blank" class="text-white text-decoration-none">
-    @activapilates.studio
-  </a>
-</footer>
+  <!-- MAP -->
+  <section class="map-section">
+    <div class="container text-center">
+      <h2 class="section-title mb-4">Dónde Estamos</h2>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+      <div class="map-container">
+        <div class="ratio ratio-16x9">
+          <iframe src="https://www.google.com/maps?q=Fasola%20728%20Haedo&output=embed" style="border:0;"
+            allowfullscreen loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="text-center">
+    <p class="mb-2" style="font-size: 1.1rem; font-weight: 600;">Activa Pilates Studio</p>
+    <div class="footer-divider"></div>
+    <p class="mb-2">📍 Fasola 728 – Haedo</p>
+    <p class="mb-3">
+      <a href="https://instagram.com/activapilates.studio" target="_blank">
+        @activapilates.studio
+      </a>
+    </p>
+    <p style="opacity: 0.7; font-size: 0.9rem;">© 2026 Activa Pilates Studio. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
