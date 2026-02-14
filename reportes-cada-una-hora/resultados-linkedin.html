@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Pruebas - Daifer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2f855a 0%, #276749 100%);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .success-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-top: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .main-stat {
+            padding: 60px 50px;
+            text-align: center;
+            background: #f7fafc;
+        }
+
+        .success-circle {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 60px rgba(72, 187, 120, 0.4);
+            position: relative;
+            animation: pulse-success 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-success {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 20px 60px rgba(72, 187, 120, 0.4);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 25px 70px rgba(72, 187, 120, 0.6);
+            }
+        }
+
+        .success-circle::before {
+            content: '✓';
+            position: absolute;
+            font-size: 8em;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+
+        .success-percentage {
+            font-size: 5em;
+            font-weight: 800;
+            color: white;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .success-label {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: white;
+            position: relative;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .browsers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 50px;
+            background: white;
+        }
+
+        .browser-card {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            border: 3px solid;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .browser-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .browser-card:hover::before {
+            opacity: 1;
+        }
+
+        .browser-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .browser-card.chromium {
+            border-color: #4299e1;
+        }
+
+        .browser-card.firefox {
+            border-color: #ed8936;
+        }
+
+        .browser-card.webkit {
+            border-color: #9f7aea;
+        }
+
+        .browser-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .browser-name {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .browser-result {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #48bb78;
+            margin-bottom: 10px;
+        }
+
+        .browser-time {
+            font-size: 1.2em;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        .details {
+            padding: 50px;
+            background: #2d3748;
+            color: white;
+        }
+
+        .details h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .detail-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .detail-item .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .detail-item .value {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .detail-item .label {
+            font-size: 1em;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .tests-list {
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .test-item {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .test-item:last-child {
+            border-bottom: none;
+        }
+
+        .test-item .check {
+            font-size: 1.5em;
+            color: #68d391;
+        }
+
+        .test-item .name {
+            flex: 1;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>✅ Resultados de las Pruebas</h1>
+            <div class="success-badge">🎯 Todas las pruebas pasaron exitosamente</div>
+        </div>
+
+        <!-- Main Success Indicator -->
+        <div class="main-stat">
+            <div class="success-circle">
+                <div class="success-percentage">100%</div>
+                <div class="success-label">ÉXITO</div>
+            </div>
+            <p style="font-size: 1.3em; color: #4a5568; font-weight: 600;">
+                9 de 9 pruebas ejecutadas correctamente en 3 navegadores
+            </p>
+        </div>
+
+        <!-- Browser Results -->
+        <div class="browsers">
+            <div class="browser-card chromium">
+                <span class="browser-icon">🌐</span>
+                <div class="browser-name">Chromium</div>
+                <div class="browser-result">3/3 Pasadas ✅</div>
+                <div class="browser-time">⏱️ Tiempo: 6.4s</div>
+            </div>
+
+            <div class="browser-card firefox">
+                <span class="browser-icon">🦊</span>
+                <div class="browser-name">Firefox</div>
+                <div class="browser-result">3/3 Pasadas ✅</div>
+                <div class="browser-time">⏱️ Tiempo: 6.1s</div>
+            </div>
+
+            <div class="browser-card webkit">
+                <span class="browser-icon">🧭</span>
+                <div class="browser-name">WebKit</div>
+                <div class="browser-result">3/3 Pasadas ✅</div>
+                <div class="browser-time">⏱️ Tiempo: 6.8s</div>
+            </div>
+        </div>
+
+        <!-- Details -->
+        <div class="details">
+            <h2>📊 Detalles de Ejecución</h2>
+
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="icon">📝</span>
+                    <div class="value">9</div>
+                    <div class="label">Total de Pruebas</div>
+                </div>
+
+                <div class="detail-item">
+                    <span class="icon">⏱️</span>
+                    <div class="value">19.3s</div>
+                    <div class="label">Tiempo Total</div>
+                </div>
+
+                <div class="detail-item">
+                    <span class="icon">🎯</span>
+                    <div class="value">100%</div>
+                    <div class="label">Tasa de Éxito</div>
+                </div>
+
+                <div class="detail-item">
+                    <span class="icon">🌐</span>
+                    <div class="value">3</div>
+                    <div class="label">Navegadores</div>
+                </div>
+            </div>
+
+            <div class="tests-list">
+                <h3 style="font-size: 1.8em; margin-bottom: 20px; font-weight: 700;">Pruebas Ejecutadas:</h3>
+
+                <div class="test-item">
+                    <span class="check">✓</span>
+                    <span class="name">Login válido - Verificación de inicio de sesión</span>
+                </div>
+
+                <div class="test-item">
+                    <span class="check">✓</span>
+                    <span class="name">Navegación por categorías - Validación de productos</span>
+                </div>
+
+                <div class="test-item">
+                    <span class="check">✓</span>
+                    <span class="name">Visualización de producto - Detalles y carrito</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>📅 Última ejecución: 14 de febrero de 2026, 11:47 hs</p>
+            <p>🔗 Sitio de pruebas: https://www.demoblaze.com</p>
+            <p style="margin-top: 15px; font-weight: 700;">Generado automáticamente por Playwright</p>
+        </div>
+    </div>
+</body>
+
+</html>
