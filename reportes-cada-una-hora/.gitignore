@@ -1,0 +1,49 @@
+# Dependencias
+node_modules/
+package-lock.json
+
+# Archivos de Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Reportes generados (no subir a GitHub)
+reporte.html
+reporte.xlsx
+reporte.csv
+reporte.json
+reporte-clean.json
+reporte-temp.json
+reporte-consola.txt
+reporte-matriz.html
+
+# Logs
+logs-ejecucion.txt
+logs-ejecucion-pro.txt
+*.log
+
+# Credenciales y archivos sensibles
+credentials.json
+credentials-example.json
+.env
+.env.local
+
+# Archivos temporales de Windows
+Thumbs.db
+desktop.ini
+.~lock.*
+
+# Archivos de sistema
+.DS_Store
+*.swp
+*.swo
+*~
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos de configuración local
+*.local

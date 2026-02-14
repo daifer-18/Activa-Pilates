@@ -1,0 +1,54 @@
+{
+  "name": "reportes-cada-una-hora",
+  "version": "1.0.0",
+  "description": "Sistema profesional de automatización de pruebas E2E con Playwright. Genera reportes en múltiples formatos (HTML, Excel, CSV), envío automático por email, subida a Google Drive y CI/CD con GitHub Actions.",
+  "main": "generarReportePRO.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "report": "playwright show-report",
+    "generar-reportes": "node generarReportePRO.js",
+    "enviar-email": "node enviarMail.js",
+    "subir-drive": "node subirDrive.js",
+    "sistema-completo": "npm test && npm run generar-reportes"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "e2e",
+    "automation",
+    "qa",
+    "reports",
+    "excel",
+    "csv",
+    "email",
+    "google-drive",
+    "ci-cd",
+    "github-actions"
+  ],
+  "author": {
+    "name": "Daifer",
+    "email": "daianaanabelfer1@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daifer-18/reportes-playwright-pro.git"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.2.3"
+  },
+  "dependencies": {
+    "googleapis": "^171.4.0",
+    "json2csv": "^6.0.0-alpha.2",
+    "nodemailer": "^8.0.1",
+    "xlsx": "^0.18.5"
+  }
+}

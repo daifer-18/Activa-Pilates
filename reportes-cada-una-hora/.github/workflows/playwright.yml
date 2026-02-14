@@ -1,0 +1,159 @@
+name: 🧪 Playwright Tests - Reportes Automáticos
+
+on:
+  # Ejecutar cada hora
+  schedule:
+    - cron: '0 * * * *'  # Cada hora en punto
+  
+  # Permitir ejecución manual
+  workflow_dispatch:
+  
+  # Ejecutar en cada push a main
+  push:
+    branches: [ main, master ]
+  
+  # Ejecutar en pull requests
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    name: 🎭 Ejecutar Pruebas E2E
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. Checkout del código
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
+      
+      # 2. Configurar Node.js
+      - name: 🟢 Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      # 3. Instalar dependencias
+      - name: 📦 Instalar dependencias
+        run: npm ci
+      
+      # 4. Instalar navegadores de Playwright
+      - name: 🌐 Instalar navegadores Playwright
+        run: npx playwright install --with-deps
+      
+      # 5. Ejecutar las pruebas
+      - name: 🧪 Ejecutar pruebas de Playwright
+        run: npx playwright test pruebas.spec.ts
+        continue-on-error: true
+      
+      # 6. Generar reporte JSON
+      - name: 📊 Generar reporte JSON
+        run: npx playwright test pruebas.spec.ts --reporter=json > reporte-clean.json
+        continue-on-error: true
+      
+      # 7. Generar reportes profesionales
+      - name: 📈 Generar reportes (HTML, CSV, Excel)
+        run: node generarReportePRO.js
+        continue-on-error: true
+      
+      # 8. Subir reportes como artefactos
+      - name: 📤 Subir reportes como artefactos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reportes-playwright-${{ github.run_number }}
+          path: |
+            reporte.html
+            reporte.xlsx
+            reporte.csv
+            reporte-clean.json
+            playwright-report/
+          retention-days: 30
+      
+      # 9. Subir reporte HTML de Playwright
+      - name: 📊 Subir reporte HTML de Playwright
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-${{ github.run_number }}
+          path: playwright-report/
+          retention-days: 30
+      
+      # 10. Comentar en PR con resultados (opcional)
+      - name: 💬 Comentar resultados en PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let comment = '## 🎭 Resultados de Playwright\n\n';
+            
+            try {
+              const report = JSON.parse(fs.readFileSync('reporte-clean.json', 'utf8'));
+              let total = 0, passed = 0, failed = 0;
+              
+              report.suites.forEach(suite => {
+                suite.specs.forEach(spec => {
+                  spec.tests.forEach(test => {
+                    total++;
+                    if (test.results[0].status === 'passed') passed++;
+                    else failed++;
+                  });
+                });
+              });
+              
+              const successRate = ((passed / total) * 100).toFixed(2);
+              
+              comment += `### 📊 Estadísticas\n\n`;
+              comment += `- **Total de pruebas:** ${total}\n`;
+              comment += `- **✅ Pasadas:** ${passed}\n`;
+              comment += `- **❌ Fallidas:** ${failed}\n`;
+              comment += `- **📈 Tasa de éxito:** ${successRate}%\n\n`;
+              
+              if (failed > 0) {
+                comment += `⚠️ **Hay pruebas fallidas. Revisa los artefactos para más detalles.**\n`;
+              } else {
+                comment += `✅ **¡Todas las pruebas pasaron exitosamente!**\n`;
+              }
+            } catch (error) {
+              comment += `⚠️ No se pudo leer el reporte de resultados.\n`;
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+      
+      # 11. Enviar notificación por email (opcional - requiere configuración)
+      # - name: 📧 Enviar email con reportes
+      #   run: node enviarMail.js
+      #   env:
+      #     EMAIL_USER: ${{ secrets.EMAIL_USER }}
+      #     EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+      
+      # 12. Subir a Google Drive (opcional - requiere configuración)
+      # - name: ☁️ Subir a Google Drive
+      #   run: node subirDrive.js
+      #   env:
+      #     GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+  # Job adicional para notificaciones
+  notify:
+    name: 📢 Notificaciones
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: 📊 Resumen de ejecución
+        run: |
+          echo "========================================="
+          echo "   RESUMEN DE EJECUCIÓN"
+          echo "========================================="
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Run Number: ${{ github.run_number }}"
+          echo "Triggered by: ${{ github.event_name }}"
+          echo "Status: ${{ needs.test.result }}"
+          echo "========================================="
